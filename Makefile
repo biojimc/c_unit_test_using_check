@@ -1,8 +1,9 @@
 CC = gcc
-CFLAGS = -Wall -Itest
+CFLAGS = -Wall -Isrc
+LIBS=`pkg-config --cflags --libs check`
 
-SRC = src/math.c
-TEST_SRC = test/test_math.c test/unity.c
+SRC = src/math_utils.c
+TEST_SRC = test/test_math.c
 TARGET = test_runner
 
 .PHONY: all clean test
@@ -10,7 +11,7 @@ TARGET = test_runner
 all: $(TARGET)
 
 $(TARGET): $(SRC) $(TEST_SRC)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
 test: $(TARGET)
 	./$(TARGET)
